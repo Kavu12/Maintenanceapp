@@ -3,6 +3,8 @@ package fr.r6a06;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import static fr.r6a06.Rental.getCharge;
+
 public class Customer {
     private String _name;
 
@@ -50,22 +52,6 @@ public class Customer {
     }
 
     private static double amountForCurrentRental(Rental each, double thisAmount) {
-        switch (each.getMovie().getPriceCode()) {
-            case Movie.REGULAR:
-                thisAmount += 2;
-                if (each.getDaysRented() > 2)
-
-                    thisAmount += (each.getDaysRented() - 2) * 1.5;
-                break;
-            case Movie.NEW_RELEASE:
-                thisAmount += each.getDaysRented() * 3;
-                break;
-            case Movie.CHILDRENS:
-                thisAmount += 1.5;
-                if (each.getDaysRented() > 3)
-                    thisAmount += (each.getDaysRented() - 3) * 1.5;
-                break;
-        }
-        return thisAmount;
+        return getCharge(each, thisAmount);
     }
 }
