@@ -1,5 +1,6 @@
 package fr.r6a06;
 
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,21 @@ public class CustomerTest {
         // Assert
         assertNotNull(c);
     }
+
+   /*
+    @Test
+    public void testAddRental() {
+        // Arrange
+        Customer customer = new CustomerBuilder().withName("Sallie").build();
+        Movie movie1 = new Movie("Gone with the Wind", Movie.REGULAR);
+        Rental rental1 = new Rental(movie1, 3); // 3 day rental
+        customer.addRental(rental1);
+
+        // Act
+
+
+    }
+   */
 
     @Test
     public void testGetName() {
@@ -108,3 +124,4 @@ public class CustomerTest {
     }
 
 }
+

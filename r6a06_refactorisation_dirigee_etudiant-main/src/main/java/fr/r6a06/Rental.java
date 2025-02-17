@@ -9,6 +9,36 @@ public class Rental {
         _daysRented = daysRented;
     }
 
+    public double getCharge() {
+        double result = 0.0;
+        switch (this.getMovie().getPriceCode()) {
+            case Movie.REGULAR:
+                result += 2;
+                if (this.getDaysRented() > 2)
+
+                    result += (this.getDaysRented() - 2) * 1.5;
+                break;
+            case Movie.NEW_RELEASE:
+                result += this.getDaysRented() * 3;
+                break;
+            case Movie.CHILDRENS:
+                result += 1.5;
+                if (this.getDaysRented() > 3)
+                    result += (this.getDaysRented() - 3) * 1.5;
+                break;
+        }
+        return result;
+    }
+
+    public int getFrequentRenterPoints() {
+
+        if ((this.getMovie().getPriceCode() == Movie.NEW_RELEASE) &&
+                this.getDaysRented() > 1)
+            return 2;
+        else
+            return 1;
+    }
+
     public int getDaysRented() {
         return _daysRented;
     }
@@ -16,25 +46,4 @@ public class Rental {
     public Movie getMovie() {
         return _movie;
     }
-
-    public static double getCharge(Rental each, double thisAmount) {
-        switch (each.getMovie().getPriceCode()) {
-            case Movie.REGULAR:
-                thisAmount += 2;
-                if (each.getDaysRented() > 2)
-
-                    thisAmount += (each.getDaysRented() - 2) * 1.5;
-                break;
-            case Movie.NEW_RELEASE:
-                thisAmount += each.getDaysRented() * 3;
-                break;
-            case Movie.CHILDRENS:
-                thisAmount += 1.5;
-                if (each.getDaysRented() > 3)
-                    thisAmount += (each.getDaysRented() - 3) * 1.5;
-                break;
-        }
-        return thisAmount;
-    }
-
 }

@@ -3,8 +3,6 @@ package fr.r6a06;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import static fr.r6a06.Rental.getCharge;
-
 public class Customer {
     private String _name;
 
@@ -22,30 +20,55 @@ public class Customer {
         return _name;
     }
 
-    public String statement() {
+
+    public double getTotalCharge() {
         double totalAmount = 0;
+
+        Enumeration rentals = _rentals.elements();
+
+        while (rentals.hasMoreElements()) {
+
+            Rental each = (Rental) rentals.nextElement();
+
+            totalAmount += each.getCharge();
+
+        }
+
+        return totalAmount;
+    }
+
+    public int getTotalFrequentRenterPoints() {
         int frequentRenterPoints = 0;
+
+        Enumeration rentals = _rentals.elements();
+
+        while (rentals.hasMoreElements()) {
+
+            Rental each = (Rental) rentals.nextElement();
+            frequentRenterPoints += each.getFrequentRenterPoints();
+
+        }
+
+        return frequentRenterPoints;
+    }
+
+
+    public String statement() {
 
         Enumeration rentals = _rentals.elements();
 
         String result = "Record for " + getName() + "\n";
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
-            // add frequent renter points
-            frequentRenterPoints++;
-            // add bonus for a two day new release rental
-            if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) &&
-                    each.getDaysRented() > 1) frequentRenterPoints++;
-            //show figures for this rental
-            result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(getCharge(each, 0)) + "\n";
-            totalAmount += getCharge(each, 0);
+            result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(each.getCharge()) + "\n";
         }
 
         //add footer lines
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) +
+        result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
+        result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) +
                 " frequent renter points";
         return result;
     }
+
 
 }
